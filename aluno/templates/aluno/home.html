@@ -1,0 +1,9 @@
+{% extends 'aluno/base.html' %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Bem-vindo ao Sistema de Matrículas</h1>
+    <p class="lead">Total de alunos cadastrados: <strong>{{ alunos_total }}</strong></p>
+    <a href="{% url 'alunos' %}" class="btn btn-primary">Ver Alunos</a>
+</div>
+{% endblock %}

@@ -1,59 +1,78 @@
 from django.db import models
 
-class Genero(models.Model):
-    nome = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.nome
-
-class Turno(models.Model):
-    nome = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.nome
-
-class Serie(models.Model):
-    nome = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.nome
-
-class Curso(models.Model):
-    nome = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.nome
-
-class UF(models.Model):
-    nome = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.nome
-    
 class Aluno(models.Model):
-    nome_completo = models.CharField(max_length=100, null=True)
-    data_nascimento = models.DateField(null=True)
-    cpf = models.CharField(max_length=14, null=True, unique=True)
-    rg = models.CharField(max_length=20, null=False)
-    genero = models.ForeignKey(Genero, on_delete=models.CASCADE, null=True)
-    email = models.EmailField(null=True, unique=True)
-    telefone = models.CharField(max_length=20, null=True)
-    telefone_emergencial = models.CharField(max_length=20, null=False)
-    cep = models.CharField(max_length=10, null=True)
-    endereco = models.CharField(max_length=100, null=True)
-    numero = models.CharField(max_length=10, null=True)
-    complemento = models.TextField()
-    bairro = models.CharField(max_length=100, null=True)
-    cidade = models.CharField(max_length=100, null=True)
-    uf = models.ForeignKey(UF, on_delete=models.CASCADE, null=True)
-    matricula = models.IntegerField(null=True)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, null=True)
-    serie = models.ForeignKey(Serie, on_delete=models.CASCADE, null=True)
-    turno = models.ForeignKey(Turno, on_delete=models.CASCADE, null=True)
-    observacao = models.TextField()
+    SEXO_CHOICES = [
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outro'),
+    ]
+    TURNO_CHOICES = [
+        ('M', 'Matutino'),
+        ('V', 'Vespertino'),
+        ('N', 'Noturno'),
+    ]
+    STATUS_CHOICES = [
+        ('A', 'Ativo'),
+        ('I', 'Inativo'),
+    ]
+    UF_CHOICES = [
+        ('AC', 'Acre'),
+        ('AL', 'Alagoas'),
+        ('AP', 'Amapá'),
+        ('AM', 'Amazonas'),
+        ('BA', 'Bahia'),
+        ('CE', 'Ceará'),
+        ('DF', 'Distrito Federal'),
+        ('ES', 'Espírito Santo'),
+        ('GO', 'Goiás'),
+        ('MA', 'Maranhão'),
+        ('MT', 'Mato Grosso'),
+        ('MS', 'Mato Grosso do Sul'),
+        ('MG', 'Minas Gerais'),
+        ('PA', 'Pará'),
+        ('PB', 'Paraíba'),
+        ('PR', 'Paraná'),
+        ('PE', 'Pernambuco'),
+        ('PI', 'Piauí'),
+        ('RJ', 'Rio de Janeiro'),
+        ('RN', 'Rio Grande do Norte'),
+        ('RS', 'Rio Grande do Sul'),
+        ('RO', 'Rondônia'),
+        ('RR', 'Roraima'),
+        ('SC', 'Santa Catarina'),
+        ('SP', 'São Paulo'),
+        ('SE', 'Sergipe'),
+        ('TO', 'Tocantins'),
+    ]
+
+    # Informações pessoais
+    nome_completo = models.CharField(max_length=150)
+    data_nascimento = models.DateField()
+    cpf = models.CharField(max_length=14, unique=True)
+    rg = models.CharField(max_length=20, unique=True)
+    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES)
+
+    # Contato
+    email = models.EmailField()
+    telefone = models.CharField(max_length=15)
+    telefone_emergencia = models.CharField(max_length=15, blank=True, null=True)
+
+    # Endereço
+    cep = models.CharField(max_length=9)
+    endereco = models.CharField(max_length=200)
+    numero = models.CharField(max_length=10)
+    complemento = models.CharField(max_length=100, blank=True, null=True)
+    bairro = models.CharField(max_length=100)
+    cidade = models.CharField(max_length=100)
+    uf = models.CharField(max_length=2, choices=UF_CHOICES)
+
+    # Acadêmico
+    numero_matricula = models.CharField(max_length=20, unique=True)
+    curso = models.CharField(max_length=100)
+    ano = models.IntegerField()
+    turno = models.CharField(max_length=1, choices=TURNO_CHOICES)
+    observacoes = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='A')
 
     def __str__(self):
-        return f"{self.nome_completo} - {self.matricula}"
-
-
-
+        return f"{self.numero_matricula} - {self.nome_completo}"

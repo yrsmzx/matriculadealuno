@@ -1,7 +1,12 @@
 {% extends 'aluno/base.html' %}
 
 {% block content %}
-<h2>Lista de Alunos</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Lista de Alunos</h2>
+    <a href="{% url 'alunos_create' %}" class="btn btn-primary"> Cadastrar Aluno
+    </a>
+</div>
+
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -31,8 +36,7 @@
                 <form method="post" action="{% url 'alunos_delete' aluno.id %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm"
-                        onclick="return confirm('Tem certeza que deseja remover este aluno?')"> Excluir
-                    </button>
+                        onclick="return confirm('Tem certeza que deseja remover este aluno?')">Excluir</button>
                 </form>
             </td>
         </tr>
@@ -42,7 +46,5 @@
         </tr>
         {% endfor %}
     </tbody>
-
 </table>
 {% endblock %}
-

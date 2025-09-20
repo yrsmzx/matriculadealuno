@@ -28,8 +28,12 @@
             <td>
                 <a href="{% url 'alunos_detail' aluno.id %}" class="btn btn-info btn-sm">Detalhes</a>
                 <a href="{% url 'alunos_update' aluno.id %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url 'alunos_delete' aluno.id %}" class="btn btn-danger btn-sm"
-                   onclick="return confirm('Tem certeza que deseja remover este aluno?')">Excluir</a>
+                <form method="post" action="{% url 'alunos_delete' aluno.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Tem certeza que deseja remover este aluno?')"> Excluir
+                    </button>
+                </form>
             </td>
         </tr>
         {% empty %}
@@ -38,5 +42,7 @@
         </tr>
         {% endfor %}
     </tbody>
+
 </table>
 {% endblock %}
+

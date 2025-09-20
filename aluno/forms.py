@@ -1,20 +1,51 @@
-from django.forms import ModelForm
 from django import forms
+from django.core.validators import RegexValidator
+from django.forms import ModelForm
 from .models import Aluno
 
 class AlunoForm(ModelForm):
+    cpf = forms.CharField(
+        label="CPF",
+        validators=[RegexValidator(
+            regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$',
+            message="Digite o CPF no formato 000.000.000-00"
+        )],
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    rg = forms.CharField(
+        label="RG",
+        validators=[RegexValidator(
+            regex=r'^\d{10}-\d$',
+            message="Digite o RG no formato XXXXXXXXXX-X (10 dígitos + hífen + 1 dígito)"
+        )],
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    telefone = forms.CharField(
+        label="Telefone",
+        validators=[RegexValidator(
+            regex=r'^\(\d{2}\) \d{4}-\d{4}$',
+            message="Digite o telefone no formato (00) 0000-0000"
+        )],
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    telefone_emergencia = forms.CharField(
+        label="Telefone Emergência",
+        required=False,
+        validators=[RegexValidator(
+            regex=r'^\(\d{2}\) \d{4}-\d{4}$',
+            message="Digite o telefone no formato (00) 0000-0000"
+        )],
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = Aluno
         fields = '__all__'
         widgets = {
             'nome_completo': forms.TextInput(attrs={'class': 'form-control'}),
             'data_nascimento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'cpf': forms.TextInput(attrs={'class': 'form-control'}),
-            'rg': forms.TextInput(attrs={'class': 'form-control'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'telefone': forms.TextInput(attrs={'class': 'form-control'}),
-            'telefone_emergencia': forms.TextInput(attrs={'class': 'form-control'}),
             'cep': forms.TextInput(attrs={'class': 'form-control'}),
             'endereco': forms.TextInput(attrs={'class': 'form-control'}),
             'numero': forms.TextInput(attrs={'class': 'form-control'}),

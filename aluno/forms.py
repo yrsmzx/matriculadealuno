@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from .models import Aluno
 
 class AlunoForm(ModelForm):
+        
     cpf = forms.CharField(
         label="CPF",
         validators=[RegexValidator(
@@ -58,5 +59,7 @@ class AlunoForm(ModelForm):
             'ano': forms.NumberInput(attrs={'class': 'form-control'}),
             'turno': forms.Select(attrs={'class': 'form-control'}),
             'observacoes': forms.Textarea(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),    
+            
         }
+

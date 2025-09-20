@@ -19,6 +19,7 @@ def alunos_create(request):
         form = AlunoForm(request.POST)
         if form.is_valid():
             form.save()
+            print("Aluno cadastrado com sucesso!")
             return redirect('alunos')
     else:
         form = AlunoForm()

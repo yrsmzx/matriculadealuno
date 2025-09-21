@@ -69,7 +69,7 @@ class Aluno(models.Model):
     # Acadêmico
     numero_matricula = models.CharField(max_length=20, unique=True)
     curso = models.CharField(max_length=100)
-    ano = models.IntegerField(max_length=4, help_text="Ano de ingresso")
+    ano = models.IntegerField(max_length=4)
     turno = models.CharField(max_length=1, choices=TURNO_CHOICES)
     observacoes = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='A')
